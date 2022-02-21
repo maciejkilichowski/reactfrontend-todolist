@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TodolistService from '../services/TodolistService';
 
 class TodolistComponent extends Component {
   constructor(props){
@@ -9,7 +10,11 @@ class TodolistComponent extends Component {
       }
   }
 
-
+componentDidMount(){
+  TodolistService.getTododata().then((res) => {
+      this.setState({todolistEntities: res.data});
+  });
+}
 
   render() {
     return (
@@ -29,8 +34,10 @@ class TodolistComponent extends Component {
                 this.state.todolistEntities.map(
                     todolistEntity =>
                     <tr key = {todolistEntity.id}>
+                      <td>{todolistEntity.id}</td>
                       <td>{todolistEntity.title}</td>
-                      <td>{todolistEntity.done}</td>
+                      <td>{String(todolistEntity.done)}</td>
+                     
                     </tr>
                 )
               }
